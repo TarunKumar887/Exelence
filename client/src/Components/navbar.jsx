@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../Context/userContext';
 import { IoHome, IoSunny, IoMoon, IoExit, IoMenu, IoClose } from "react-icons/io5";
 import { RiFileExcel2Fill } from "react-icons/ri";
@@ -11,6 +11,7 @@ const Navbar = () => {
   const { user, setUser } = useUser();
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();   // ✅ get current path
   const [mobileOpen, setMobileOpen] = useState(false);
   const mobileMenuRef = useRef(null);
   const [menuHeight, setMenuHeight] = useState(0);
@@ -59,14 +60,17 @@ const Navbar = () => {
 
             {/* Desktop Buttons */}
             <div className="hidden sm:flex items-center gap-3">
-              <button
-                onClick={() => navigate("/")}
-                className={`p-2 rounded-full transition-all duration-300 
-                  ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-white' : 'bg-green-200 hover:bg-green-300 text-green-800 shadow-md hover:shadow-lg'}`}
-                aria-label="Home"
-              >
-                <IoHome className="w-5 h-5" />
-              </button>
+              {/* ✅ Show Home button only if NOT on homepage */}
+              {location.pathname !== "/" && (
+                <button
+                  onClick={() => navigate("/")}
+                  className={`p-2 rounded-full transition-all duration-300 
+                    ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-white' : 'bg-green-200 hover:bg-green-300 text-green-800 shadow-md hover:shadow-lg'}`}
+                  aria-label="Home"
+                >
+                  <IoHome className="w-5 h-5" />
+                </button>
+              )}
 
               {!user ? (
                 <>
@@ -148,13 +152,16 @@ const Navbar = () => {
         <div className={`space-y-2 pb-4
           ${isDark ? 'bg-gray-900/95 border-t border-gray-700' : 'bg-green-100/95 border-t border-green-300'}`}>
 
-          <button
-            onClick={() => { navigate("/"); setMobileOpen(false); }}
-            className={`flex items-center gap-2 w-full p-2 rounded transition-colors
-              ${isDark ? 'text-white hover:bg-gray-800' : 'text-green-800 hover:bg-green-200'}`}
-          >
-            <IoHome className="w-5 h-5" /> Home
-          </button>
+          {/* ✅ Show Home in mobile menu only if not on homepage */}
+          {location.pathname !== "/" && (
+            <button
+              onClick={() => { navigate("/"); setMobileOpen(false); }}
+              className={`flex items-center gap-2 w-full p-2 rounded transition-colors
+                ${isDark ? 'text-white hover:bg-gray-800' : 'text-green-800 hover:bg-green-200'}`}
+            >
+              <IoHome className="w-5 h-5" /> Home
+            </button>
+          )}
 
           {!user ? (
             <>
