@@ -62,7 +62,7 @@ const Navbar = () => {
               <button
                 onClick={() => navigate("/")}
                 className={`p-2 rounded-full transition-all duration-300 
-                  ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-green-400' : 'bg-green-200 hover:bg-green-300 text-green-800 shadow-md hover:shadow-lg'}`}
+                  ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-white' : 'bg-green-200 hover:bg-green-300 text-green-800 shadow-md hover:shadow-lg'}`}
                 aria-label="Home"
               >
                 <IoHome className="w-5 h-5" />
@@ -101,8 +101,15 @@ const Navbar = () => {
                         loading="lazy"
                       />
                     ) : (
-                      <FaUserCircle className={`h-full w-full ${isDark ? 'text-green-400' : 'text-green-700'}`} />
+                      <FaUserCircle className={`h-full w-full ${isDark ? 'text-white' : 'text-green-700'}`} />
                     )}
+                    <span
+                      className={`absolute top-full mt-2 px-3 py-1 text-xs font-medium rounded-lg shadow-md opacity-0 scale-90 
+                        group-hover:opacity-100 group-hover:scale-100 transition-all duration-200
+                        ${isDark ? 'bg-gray-800 text-white' : 'bg-green-50 text-green-900'}`}
+                    >
+                      Profile
+                    </span>
                   </Link>
                   <button
                     onClick={handleLogout}
@@ -120,7 +127,7 @@ const Navbar = () => {
             <div className="sm:hidden flex items-center">
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className={`p-2 rounded-md ${isDark ? 'text-green-400' : 'text-green-700'} focus:outline-none`}
+                className={`p-2 rounded-md ${isDark ? 'text-white' : 'text-green-700'} focus:outline-none`}
               >
                 {mobileOpen ? <IoClose className="w-6 h-6" /> : <IoMenu className="w-6 h-6" />}
               </button>
@@ -143,7 +150,8 @@ const Navbar = () => {
 
           <button
             onClick={() => { navigate("/"); setMobileOpen(false); }}
-            className="flex items-center gap-2 w-full p-2 rounded hover:bg-green-200 transition-colors"
+            className={`flex items-center gap-2 w-full p-2 rounded transition-colors
+              ${isDark ? 'text-white hover:bg-gray-800' : 'text-green-800 hover:bg-green-200'}`}
           >
             <IoHome className="w-5 h-5" /> Home
           </button>
@@ -164,7 +172,8 @@ const Navbar = () => {
           ) : (
             <>
               <Link to="/profile" onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-green-100 transition-all"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
+                  ${isDark ? 'text-white hover:bg-gray-800' : 'text-green-700 hover:bg-green-100'}`}
               >
                 <FaUserCircle /> Profile
               </Link>
